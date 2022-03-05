@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { Main, Container, Logo, ContentBody, Home, Title, Description, InputArea, CTA, Breakdown, Footer } from "./styles";
 import { AppBar, Toolbar, Button, InputAdornment, InputLabel, OutlinedInput, FormControl } from '@mui/material'
 
 function App() {
+  
+  const handleChange = (e) => {
+    let newValue = parseInt(e.target.value)
+
+    switch (e.target.id) {
+      case "carprice":
+        if (newValue < 0) return setValues({...values, carprice: 0})
+        setValues({...values, carprice: newValue})
+        break
+      case "downpayment":
+        if (newValue < 0) return setValues({...values, downpayment: 0})
+        setValues({...values, downpayment: newValue})
+        break
+      case "tradeinvalue":
+        if (newValue < 0) return setValues({...values, tradeinvalue: 0})
+        setValues({...values, tradeinvalue: newValue})
+        break
+      case "lengthofloan":
+        if (newValue < 0) return setValues({...values, lengthofloan: 0})
+        setValues({...values, lengthofloan: newValue})
+        break
+      case "rate":
+        if (newValue < 0) return setValues({...values, rate: 0})
+        setValues({...values, rate: newValue})
+        break
+    }
+    
+  }
+  const [values, setValues] = useState({
+    carprice: null,
+    downpayment: null,
+    tradeinvalue: null,
+    lengthofloan: null,
+    rate: null
+  })
+  console.log(values)
   return (
     <Main>
       <Container>
@@ -22,19 +58,26 @@ function App() {
           </Home>
           <InputArea>
             <CTA>QuickStart</CTA>
-            <FormControl 
+            <FormControl
+              InputProps={{
+                inputProps: {
+                  max: 100, min: 0
+                }
+              }}
               fullWidth 
               sx={{
                 bgcolor: 'white',
                 mt: '20px'
               }}
             >
-              <InputLabel htmlFor="outlined-adornment-carprice">Car Price</InputLabel>
+              <InputLabel htmlFor="carprice">Car Price</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-carprice"
+                id="carprice"
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 label="Car Price"
                 type="number"
+                value={values.carprice}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl 
@@ -44,12 +87,14 @@ function App() {
                 mt: '20px'
               }}
             >
-              <InputLabel htmlFor="outlined-adornment-downpayment">Down Payment (optional)</InputLabel>
+              <InputLabel htmlFor="downpayment">Down Payment (optional)</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-downpayment"
+                id="downpayment"
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 label="Down Payment (optional)"
                 type="number"
+                value={values.downpayment}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl 
@@ -59,12 +104,14 @@ function App() {
                 mt: '20px'
               }}
             >
-              <InputLabel htmlFor="outlined-adornment-tradeinvalue">Trade-in value (optional)</InputLabel>
+              <InputLabel htmlFor="tradeinvalue">Trade-in value (optional)</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-outlined-adornment-tradeinvalue"
+                id="tradeinvalue"
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
                 label="Trade-in value (optional)"
                 type="number"
+                value={values.tradeinvalue}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl 
@@ -74,12 +121,14 @@ function App() {
                 mt: '20px'
               }}
             >
-              <InputLabel htmlFor="outlined-adornment-lengthofloan">Length of loan</InputLabel>
+              <InputLabel htmlFor="lengthofloan">Length of loan</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-outlined-adornment-lengthofloan"
+                id="lengthofloan"
                 endAdornment={<InputAdornment position="end">months</InputAdornment>}
                 label="Length of loan"
                 type="number"
+                value={values.lengthofloan}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl 
@@ -89,12 +138,14 @@ function App() {
                 mt: '20px'
               }}
             >
-              <InputLabel htmlFor="outlined-adornment-rate">Annual Percentage Rate</InputLabel>
+              <InputLabel htmlFor="rate">Annual Percentage Rate</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-outlined-adornment-rate"
+                id="rate"
                 endAdornment={<InputAdornment position="end">%</InputAdornment>}
                 label="Annual Percentage Rate"
                 type="number"
+                value={values.rate}
+                onChange={handleChange}
               />
             </FormControl>
             <Button 

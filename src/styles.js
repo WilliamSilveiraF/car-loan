@@ -15,7 +15,7 @@ export const Container = styled.div`
     & > section {
         margin: auto;
     }
-    grid-template-rows: 60px 1124px 60px;
+    grid-template-rows: 60px 1184px 60px;
 
 `
 
