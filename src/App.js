@@ -70,6 +70,7 @@ function App() {
         setLoading(false)
       })
   }
+  console.log(breakdown)
   if (isLoanding) {
     return (
       <Main>
@@ -196,14 +197,14 @@ function App() {
           </InputArea>
           <Breakdown>
             <CTA>Your estimated payment</CTA>
-            <h5>{ formatter.format(breakdown.monthlyPayment) }/mo. </h5>
+            <h5>{ formatter.format(parseFloat(breakdown.monthlyPayment)) }/mo. </h5>
             <h4>Breakdown</h4>
-            <p>Car Price <span>{ formatter.format(breakdown.carprice) }</span></p>
-            <p>Down Payment <span>-{ formatter.format(breakdown.downpayment) }</span></p>
-            <p>Trade-in value <span>-{ formatter.format(breakdown.tradeinvalue) }</span></p>
+            <p>Car Price <span>{ formatter.format(parseFloat(breakdown.carprice)) }</span></p>
+            <p>Down Payment <span>- { formatter.format(parseFloat(breakdown.downpayment)) }</span></p>
+            <p>Trade-in value <span>- { formatter.format(parseFloat(breakdown.tradeinvalue)) }</span></p>
             <div></div>
-            <h3>Total loan amount<span>{ formatter.format(breakdown.totalLoan) }</span></h3>
-            <h3>Total interest paid<span>{ formatter.format(breakdown.totalInterestPaid) }</span></h3>
+            <h3>Total loan amount<span>{ formatter.format(parseFloat(breakdown.totalLoan)) }</span></h3>
+            <h3>Total interest paid<span>{ formatter.format(parseFloat(breakdown.totalInterestPaid)) }</span></h3>
             <h3>Total loan & interest payment<span>{ formatter.format(breakdown.totalLoanAndInterestPaid) }</span></h3>
             <h3>Monthly payment<span>{ formatter.format(breakdown.monthlyPayment) }</span></h3>
           </Breakdown>

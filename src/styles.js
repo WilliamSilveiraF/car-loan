@@ -66,7 +66,7 @@ export const Breakdown = styled.section`
     }
     & > h5 {
         margin-top: 16px;
-        font-size: 2.25rem;
+        font-size: 2.1rem;
         text-align: center;
     }
     & > h4 {
@@ -74,14 +74,14 @@ export const Breakdown = styled.section`
         font-size: 1.75rem;
     }
     & > p {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: '#F2F2F2';
         margin-top: 16px;
         display: flex;
         justify-content: space-between;
     }
     & > p > * {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     & > div {
         width: 100%;
@@ -90,7 +90,7 @@ export const Breakdown = styled.section`
         margin: 16px 0 16px 0;
     }
     & > h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         margin-top: 16px;
         display: flex;
         justify-content: space-between;
@@ -116,5 +116,4 @@ export const CenterLoading = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid hotpink;
 `
