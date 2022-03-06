@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Main, Container, Logo, ContentBody, Home, Title, Description, InputArea, CTA, Breakdown, Footer } from "./styles";
 import { AppBar, Toolbar, Button, InputAdornment, InputLabel, OutlinedInput, FormControl } from '@mui/material'
 
+const axios = require('axios')
+
 function App() {
-  
   const handleChange = (e) => {
     let newValue = parseInt(e.target.value)
 
@@ -26,7 +27,7 @@ function App() {
         break
       case "rate":
         if (newValue < 0) return setValues({...values, rate: 0})
-        setValues({...values, rate: newValue})
+        setValues({...values, rate: parseFloat(newValue)})
         break
     }
     
@@ -38,7 +39,26 @@ function App() {
     lengthofloan: null,
     rate: null
   })
-  console.log(values)
+  const [breakdown, setBreakdown] = useState({
+    carprice: 0,
+    downpayment: 0,
+    monthlyPayment: 0,
+    totalInterestPaid: 0,
+    totalLoanAndInterestPaid: 0,
+    tradeinvalue: 0,
+  })
+
+  const handleSubmit = async () => {
+    console.log("CHAMADO...")
+    axios({
+      method: 'post',
+      headers: {"Access-Control-Allow-Origin": "*"},
+      url: 'https://car-loan-api.herokuapp.com/api/calcaculateloan',
+      data: {...values, rate: values.rate / 100}
+    })
+      .then((response) => setBreakdown({...response.data}))
+  }
+
   return (
     <Main>
       <Container>
@@ -56,14 +76,9 @@ function App() {
               Make a simulation and see the value of the installment of your next car
             </Description>
           </Home>
-          <InputArea>
+          <InputArea onSubmit={handleSubmit}>
             <CTA>QuickStart</CTA>
             <FormControl
-              InputProps={{
-                inputProps: {
-                  max: 100, min: 0
-                }
-              }}
               fullWidth 
               sx={{
                 bgcolor: 'white',
@@ -154,22 +169,23 @@ function App() {
               sx={{
                 mt: '20px'
               }}
+              onClick={handleSubmit}
             >
               Calculate
             </Button>
           </InputArea>
           <Breakdown>
             <CTA>Your estimated payment</CTA>
-            <h5>${ '0' }/mo. </h5>
+            <h5>${ breakdown.monthlyPayment }/mo. </h5>
             <h4>Breakdown</h4>
-            <p>Car Price <span>${'0'}</span></p>
-            <p>Down Payment <span>-${'0'}</span></p>
-            <p>Trade-in value <span>-${'0'}</span></p>
+            <p>Car Price <span>${ breakdown.carprice }</span></p>
+            <p>Down Payment <span>-${ breakdown.downpayment }</span></p>
+            <p>Trade-in value <span>-${ breakdown.tradeinvalue }</span></p>
             <div></div>
-            <h3>Total loan amount<span>${'0'}</span></h3>
-            <h3>Total interest paid<span>${'0'}</span></h3>
-            <h3>Total loan & interest payment<span>${'0'}</span></h3>
-            <h3>Monthly payment<span>${'0'}</span></h3>
+            <h3>Total loan amount<span>${ 0 }</span></h3>
+            <h3>Total interest paid<span>${ breakdown.totalInterestPaid }</span></h3>
+            <h3>Total loan & interest payment<span>${ breakdown.totalLoanAndInterestPaid }</span></h3>
+            <h3>Monthly payment<span>${ breakdown.monthlyPayment }</span></h3>
           </Breakdown>
         </ContentBody>
         <Footer>
