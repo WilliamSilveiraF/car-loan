@@ -3,7 +3,10 @@ import { Main, Container, Logo, ContentBody, Home, Title, Description, InputArea
 import { AppBar, Toolbar, Button, InputAdornment, InputLabel, OutlinedInput, FormControl, CircularProgress } from '@mui/material'
 
 const axios = require('axios')
-
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+})
 function App() {
   const handleChange = (e) => {
     let newValue = parseInt(e.target.value)
@@ -57,7 +60,7 @@ function App() {
     axios({
       method: 'post',
       headers: {"Access-Control-Allow-Origin": "*"},
-      url: 'https://car-loan-api.herokuapp.com/api/calcaculateloan',
+      url: 'https://car-loan-api.herokuapp.com/api/calculateloan',
       data: {...values, rate: values.rate / 100}
     })
       .then((response) => setBreakdown({...response.data}))
@@ -193,16 +196,16 @@ function App() {
           </InputArea>
           <Breakdown>
             <CTA>Your estimated payment</CTA>
-            <h5>${ breakdown.monthlyPayment }/mo. </h5>
+            <h5>{ formatter.format(breakdown.monthlyPayment) }/mo. </h5>
             <h4>Breakdown</h4>
-            <p>Car Price <span>${ breakdown.carprice }</span></p>
-            <p>Down Payment <span>-${ breakdown.downpayment }</span></p>
-            <p>Trade-in value <span>-${ breakdown.tradeinvalue }</span></p>
+            <p>Car Price <span>{ formatter.format(breakdown.carprice) }</span></p>
+            <p>Down Payment <span>-{ formatter.format(breakdown.downpayment) }</span></p>
+            <p>Trade-in value <span>-{ formatter.format(breakdown.tradeinvalue) }</span></p>
             <div></div>
-            <h3>Total loan amount<span>${ breakdown.totalLoan }</span></h3>
-            <h3>Total interest paid<span>${ breakdown.totalInterestPaid }</span></h3>
-            <h3>Total loan & interest payment<span>${ breakdown.totalLoanAndInterestPaid }</span></h3>
-            <h3>Monthly payment<span>${ breakdown.monthlyPayment }</span></h3>
+            <h3>Total loan amount<span>{ formatter.format(breakdown.totalLoan) }</span></h3>
+            <h3>Total interest paid<span>{ formatter.format(breakdown.totalInterestPaid) }</span></h3>
+            <h3>Total loan & interest payment<span>{ formatter.format(breakdown.totalLoanAndInterestPaid) }</span></h3>
+            <h3>Monthly payment<span>{ formatter.format(breakdown.monthlyPayment) }</span></h3>
           </Breakdown>
         </ContentBody>
         <Footer>
