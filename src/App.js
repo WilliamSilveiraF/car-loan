@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Main, Container, Logo, ContentBody, Home, Title, Description, InputArea, CTA, Breakdown, Footer } from "./styles";
-import { AppBar, Toolbar, Button, InputAdornment, InputLabel, OutlinedInput, FormControl } from '@mui/material'
+import { Main, Container, Logo, ContentBody, Home, Title, Description, InputArea, CTA, Breakdown, Footer, CenterLoading } from "./styles";
+import { AppBar, Toolbar, Button, InputAdornment, InputLabel, OutlinedInput, FormControl, CircularProgress } from '@mui/material'
 
 const axios = require('axios')
 
@@ -29,9 +29,12 @@ function App() {
         if (newValue < 0) return setValues({...values, rate: 0})
         setValues({...values, rate: parseFloat(newValue)})
         break
+      default:
+        console.log("Input not found")
     }
     
   }
+  const [isLoanding, setLoading] = useState(false)
   const [values, setValues] = useState({
     carprice: null,
     downpayment: null,
@@ -44,12 +47,13 @@ function App() {
     downpayment: 0,
     monthlyPayment: 0,
     totalInterestPaid: 0,
+    totalLoan: 0,
     totalLoanAndInterestPaid: 0,
     tradeinvalue: 0,
   })
 
   const handleSubmit = async () => {
-    console.log("CHAMADO...")
+    setLoading(true)
     axios({
       method: 'post',
       headers: {"Access-Control-Allow-Origin": "*"},
@@ -57,8 +61,21 @@ function App() {
       data: {...values, rate: values.rate / 100}
     })
       .then((response) => setBreakdown({...response.data}))
+      .then(setLoading(false))
+      .catch(error => {
+        window.alert(error)
+        setLoading(false)
+      })
   }
-
+  if (isLoanding) {
+    return (
+      <Main>
+        <CenterLoading>
+          <CircularProgress />
+        </CenterLoading>
+      </Main>
+    );
+  }
   return (
     <Main>
       <Container>
@@ -182,7 +199,7 @@ function App() {
             <p>Down Payment <span>-${ breakdown.downpayment }</span></p>
             <p>Trade-in value <span>-${ breakdown.tradeinvalue }</span></p>
             <div></div>
-            <h3>Total loan amount<span>${ 0 }</span></h3>
+            <h3>Total loan amount<span>${ breakdown.totalLoan }</span></h3>
             <h3>Total interest paid<span>${ breakdown.totalInterestPaid }</span></h3>
             <h3>Total loan & interest payment<span>${ breakdown.totalLoanAndInterestPaid }</span></h3>
             <h3>Monthly payment<span>${ breakdown.monthlyPayment }</span></h3>

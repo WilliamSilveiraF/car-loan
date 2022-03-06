@@ -110,3 +110,11 @@ export const Footer = styled.footer`
         font-size: 0.75rem;
     }
 `
+
+export const CenterLoading = styled.section`
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid hotpink;
+`
