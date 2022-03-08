@@ -9,7 +9,7 @@ var formatter = new Intl.NumberFormat('en-US', {
 })
 function App() {
   const handleChange = (e) => {
-    let newValue = parseInt(e.target.value)
+    let newValue = parseFloat(e.target.value)
 
     switch (e.target.id) {
       case "carprice":
